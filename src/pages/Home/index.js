@@ -20,7 +20,7 @@ const Page = () => {
     </header>
     <main>
       <section className="SliderContainer">
-        <Slider />
+        <Slider/>
       </section>
       <section id="nos-services" className="ServicesContainer">
         <h2 className="Title">Nos services</h2>

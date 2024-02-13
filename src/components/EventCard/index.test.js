@@ -23,7 +23,7 @@ describe("When a event card is created", () => {
       />
     );
     const titleElement = screen.getByText(/test event/i);
-    const monthElement = screen.getByText(/mars/i);
+    const monthElement = screen.getByText(/avril/);
     const labelElement = screen.getByText(/test label/i);
     expect(titleElement).toBeInTheDocument();
     expect(labelElement).toBeInTheDocument();
