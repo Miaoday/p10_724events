@@ -7,8 +7,8 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const slidesLength = data && data.focus && data.focus.length;
-  const byDateDesc = (data?.focus|| []).sort((evtA, evtB) =>
-    new Date(evtB.date) - new Date(evtA.date)
+  const byDateDesc = (data?.focus|| []).sort(
+    (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
   );
   // const data1= 0
   // console.log(data1?.focus);
