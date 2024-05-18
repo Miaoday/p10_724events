@@ -30,12 +30,14 @@ export const DataProvider = ({ children }) => {
       } catch (err) {
         setError(err);
       }
-    }, []);
+    }, []
+  );
 
   useEffect(() => {
-    if (data) return;
+    if (data) 
+    return;
     getData();
-  },[data, getData]);
+  },[data, getData]); 
   
   useEffect(() => {
     if (data && data.events && data.events.length > 0) {

@@ -4,18 +4,29 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () => 
-new Promise((resolve) => { 
+const mockContactApi = () => new Promise((resolve) => { 
   setTimeout(resolve, 1000); // 1 second delay before resolving the Promise
 })
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({
+    nom: "",
+    prenom: "",
+    selection: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChanged = (form, value ) => {
+    setFormData({...formData, [form]: value});
+  };
+
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+      // We try to call mockContactApi      
       try {
         await mockContactApi();
         setSending(false);
@@ -31,16 +42,18 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" />
-          <Field placeholder="" label="Prénom" />
+          <Field placeholder="" label="Nom" value={formData.nom} onChange={(value)=> handleChanged("nom", value)} required/>
+          <Field placeholder="" label="Prénom" value={formData.prenom} onChange={(value)=> handleChanged("prenom", value)} required/>
           <Select
             selection={["Personel", "Entreprise"]}
-            onChange={() => null}
+            value= {formData.selection}
+            onChange={(value) => handleChanged("selection", value)}
             label="Personel / Entreprise"
             type="large"
             titleEmpty
+            required
           />
-          <Field placeholder="" label="Email" />
+          <Field placeholder="" label="Email" type={FIELD_TYPES.INPUT_TEXT} value={formData.email} onChange={(value)=> handleChanged("email", value)} required/>
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer" }
           </Button>
@@ -50,6 +63,9 @@ const Form = ({ onSuccess, onError }) => {
             placeholder="message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
+            value={formData.message}
+            onChange={(value)=> handleChanged("message", value)}
+            required
           />
         </div>
       </div>

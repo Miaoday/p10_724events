@@ -124,8 +124,7 @@ const Page = () => {
           small
           label="boom"
         />
-        )
-        }
+        )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>

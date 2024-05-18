@@ -12,34 +12,32 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  // const filteredEvents = (
-  //   (!type
-  //     ? data?.events
-  //     : data.events.filter((event) => event.type === type)
-  //   ) || [] // Ajout filter en fonction du type
-  // ) 
-  // .filter((_event, index) => {
-  //   if (
-  //     (currentPage - 1) * PER_PAGE <= index &&
-  //     PER_PAGE * currentPage > index
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  const filteredEvents = (() => {
-    if (!type && data && data.events) {
-      return data.events;
-    } if (data && data.events) {
-      return data.events.filter((event) => event.type === type);
-    } 
-      return [];
-  })()
-    .filter((_event, index) => {
-      const startIndex = (currentPage - 1) * PER_PAGE;
-      const endIndex = startIndex + PER_PAGE;
-      return index >= startIndex && index < endIndex;
-    });
+  const filteredEvents = (
+    (!type ? data?.events : data.events.filter((event) => event.type === type)) || []  ) 
+  // Ajout filter en fonction du type
+  .filter((_, index) => {
+    if (
+      (currentPage - 1) * PER_PAGE <= index &&
+      PER_PAGE * currentPage > index
+    ) {
+      return true;
+    }
+    return false;
+  });
+  // const filteredEvents = (() => {
+  //   if (data && data.events){
+  //     if(type){
+  //       return data.events.filter((event) => event.type === type);
+  //     } 
+  //       return data.events;      
+  //   }  
+  //     return [];   
+  // })().filter((_, index) => {    
+  //     const startIndex = (currentPage - 1) * PER_PAGE;
+  //     const endIndex = startIndex + PER_PAGE;
+  //     return index >= startIndex && index < endIndex;
+  //   });
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
@@ -50,10 +48,10 @@ const EventList = () => {
   if (data && data.events) {
     data.events.forEach((event) => typeList.add(event.type));
   }
-  
+
   return (
     <>
-      {error && <div>An error occured</div>}
+      {error && <div>An error occured</div>}    
       {data === null ? (
         "loading"
       ) : (
