@@ -22,11 +22,12 @@ const Form = ({ onSuccess, onError }) => {
     setFormData({...formData, [form]: value});
   };
 
+  // We try to call mockContactApi      
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi      
+
       try {
         await mockContactApi();
         setSending(false);
